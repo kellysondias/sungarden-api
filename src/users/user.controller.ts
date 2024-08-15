@@ -1,5 +1,6 @@
-import { NextFunction, Request, Response } from "express";
-import UsersService from "./user.service";
+import {NextFunction, Request, Response} from 'express';
+import UsersService from './user.service';
+import {UserResponseDto} from "./dto/user-response.dto";
 
 export class UserController {
   async create(req: Request, res: Response, next: NextFunction) {
@@ -26,33 +27,36 @@ export class UserController {
     }
   }
 
-  async all(req: Request, res: Response, next: NextFunction) {
-    try {
-      const users = await UsersService.findAll();
-      if (!users) {
-        return res.status(404).send("Users not found");
-      }
-      return res.status(200).json(users);
-    } catch (error) {
-      next(error);
+    async all(req: Request, res: Response, next: NextFunction) {
+        try {
+            const users = await UsersService.findAll();
+            if (!users) {
+                return res.status(404).send('Users not found');
+            }
+
+            const responseList: UserResponseDto[] = users.map(user => new UserResponseDto(user));
+            return res.status(200).json(responseList);
+        } catch (error) {
+            next(error);
+        }
     }
-  }
 
-  async byId(req: Request, res: Response, next: NextFunction) {
-    try {
-      const id = parseInt(req.params.id);
-      if (isNaN(id)) {
-        return res.status(400).send("Invalid ID");
-      }
+    async byId(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = parseInt(req.params.id);
+            if (isNaN(id)) {
+                return res.status(400).send('Invalid ID');
+            }
 
-      const user = await UsersService.findById(id);
-      if (!user) {
-        return res.status(404).send("User not found");
-      }
+            const user = await UsersService.findById(id);
+            if (!user) {
+                return res.status(404).send('User not found');
+            }
 
-      return res.status(200).json(user);
-    } catch (error) {
-      next(error);
+            const response = new UserResponseDto(user);
+            return res.status(200).json(response);
+        } catch (error) {
+            next(error);
+        }
     }
-  }
 }
