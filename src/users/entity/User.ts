@@ -1,20 +1,30 @@
+import { IsEmail, IsString, Length, Matches } from "class-validator";
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-import { isString } from "util";
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @IsString()
+  @Length(3, 16)
+  @Column({ length: 16 })
   firstName: string;
 
-  @Column()
+  @IsString()
+  @Length(3, 16)
+  @Column({ length: 16 })
   lastName: string;
 
-  @Column()
+  @IsEmail()
+  @Column({ unique: true })
   email: string;
 
+  @IsString()
+  @Length(6, 100)
+  @Matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{6,}$/, {
+    message: "Password too weak",
+  })
   @Column()
   password: string;
 }
