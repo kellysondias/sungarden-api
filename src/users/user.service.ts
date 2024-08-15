@@ -6,7 +6,9 @@ import { ValidationResponse } from "./dto/user-response.dto";
 class UsersService {
   private userRepository = AppDataSource.getRepository(User);
 
-  async create(payload: User): Promise<User | ValidationResponse | null> {
+  async create(
+    payload: User
+  ): Promise<Partial<User> | ValidationResponse | null> {
     const user = this.userRepository.create(payload);
     const errors = await validate(user);
 
@@ -30,7 +32,9 @@ class UsersService {
       return null;
     }
 
-    return await this.userRepository.save(user);
+    const savedUser = await this.userRepository.save(user);
+    const { password, ...userWithoutPassword } = savedUser;
+    return userWithoutPassword;
   }
 
   async findAll(): Promise<User[]> {
@@ -39,6 +43,11 @@ class UsersService {
 
   async findById(id: number): Promise<User | null> {
     return await this.userRepository.findOneBy({ id });
+  }
+
+  private omitPassword(user: User): Omit<User, "password"> {
+    const { password, ...userWithoutPassword } = user;
+    return userWithoutPassword;
   }
 }
 
