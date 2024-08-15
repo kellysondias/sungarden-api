@@ -44,11 +44,6 @@ class UsersService {
   async findById(id: number): Promise<User | null> {
     return await this.userRepository.findOneBy({ id });
   }
-
-  private omitPassword(user: User): Omit<User, "password"> {
-    const { password, ...userWithoutPassword } = user;
-    return userWithoutPassword;
-  }
 }
 
 export default new UsersService();
