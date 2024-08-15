@@ -7,3 +7,4 @@ export interface ValidationResponse {
   status: string;
   errors: ValidationError[];
 }
+

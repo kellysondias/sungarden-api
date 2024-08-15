@@ -18,5 +18,5 @@ export const Routes = [
     route: "/users",
     controller: UserController,
     action: "create",
-  },
+  }
 ];

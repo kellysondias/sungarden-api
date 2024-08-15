@@ -7,12 +7,10 @@ class UsersService {
   private userRepository = AppDataSource.getRepository(User);
 
   async create(payload: User): Promise<User | ValidationResponse | null> {
-    // Validação do payload
     const user = this.userRepository.create(payload);
     const errors = await validate(user);
 
     if (errors.length > 0) {
-      // Formatar e retornar erros de validação
       const formattedErrors = errors.map((err) => ({
         field: err.property,
         message: Object.values(err.constraints || {}).join(", "),
@@ -24,7 +22,6 @@ class UsersService {
       } as ValidationResponse;
     }
 
-    // Verificar se o usuário já existe
     const existingUser = await this.userRepository.findOneBy({
       email: payload.email,
     });

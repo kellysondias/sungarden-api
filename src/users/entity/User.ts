@@ -1,7 +1,7 @@
 import { IsEmail, IsString, Length, Matches } from "class-validator";
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
-@Entity()
+@Entity("users")
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
