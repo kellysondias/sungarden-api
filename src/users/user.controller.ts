@@ -3,27 +3,29 @@ import UsersService from './user.service';
 import {UserResponseDto} from "./dto/user-response.dto";
 
 export class UserController {
-    async create(req: Request, res: Response, next: NextFunction) {
-        try {
-            const user = req.body;
-            const result = await UsersService.create(user);
+  async create(req: Request, res: Response, next: NextFunction) {
+    try {
+      const user = req.body;
+      const result = await UsersService.create(user);
 
-            if (result && 'errors' in result) {
-                return res.status(400).json(result);
-            }
+      if (result && "errors" in result) {
+        return res.status(400).json(result);
+      }
 
-            if (!result) {
-                return res.status(400).json({
-                    status: 'error',
-                    errors: [{field: 'email', message: 'User with this email already exists'}],
-                });
-            }
+      if (!result) {
+        return res.status(400).json({
+          status: "error",
+          errors: [
+            { field: "email", message: "User with this email already exists" },
+          ],
+        });
+      }
 
-            return res.status(201).json(result);
-        } catch (error) {
-            return res.status(500).json({status: 'error', message: error.message});
-        }
+      return res.status(201).json(result);
+    } catch (error) {
+      return res.status(500).json({ status: "error", message: error.message });
     }
+  }
 
     async all(req: Request, res: Response, next: NextFunction) {
         try {
