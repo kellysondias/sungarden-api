@@ -55,6 +55,10 @@ class UsersService {
 
     return this.userRepository.save(updateUser);
   }
+
+  async delete(id: number) {
+    return this.userRepository.delete(id);
+  }
 }
 
 export default new UsersService();
