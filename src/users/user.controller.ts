@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import UsersService from "./user.service";
 import { UserResponseDto } from "./dto/user-response.dto";
+import userService from "../services/user.service";
 
 export class UserController {
   async create(req: Request, res: Response, next: NextFunction) {
@@ -79,6 +80,20 @@ export class UserController {
 
       const response = new UserResponseDto(user);
       return res.status(200).json(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async delete({ params }: Request, res: Response, next: NextFunction) {
+    try {
+      const id = parseInt(params.id);
+
+      if (isNaN(id)) return res.status(400).send("Invalid ID");
+
+      await userService.delete(id);
+
+      return res.status(204).json({ message: "User was successfully deleted" });
     } catch (error) {
       next(error);
     }
