@@ -3,6 +3,12 @@ import { validate } from "class-validator";
 import { User } from "./entity/User";
 import { ValidationResponse } from "./dto/user-response.dto";
 
+interface newData {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
 class UsersService {
   private userRepository = AppDataSource.getRepository(User);
 
@@ -43,6 +49,16 @@ class UsersService {
 
   async findById(id: number): Promise<User | null> {
     return await this.userRepository.findOneBy({ id });
+  }
+
+  async update(id: number, newData: newData): Promise<User> {
+    const user = await this.findById(id);
+
+    if (!user) return null;
+
+    const updateUser = this.userRepository.merge(user, newData);
+
+    return this.userRepository.save(updateUser);
   }
 }
 
