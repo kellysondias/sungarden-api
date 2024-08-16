@@ -89,7 +89,9 @@ export class UserController {
     try {
       const id = parseInt(params.id);
 
-      if (isNaN(id)) return res.status(400).send("Invalid ID");
+      if (isNaN(id)) {
+        return res.status(400).send("Invalid ID");
+      }
 
       await userService.delete(id);
 
