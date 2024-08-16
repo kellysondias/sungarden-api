@@ -47,6 +47,11 @@ export class UserController {
     try {
       const id = parseInt(params.id);
 
+      if (JSON.stringify(body) === "{}")
+        return res
+          .status(411)
+          .json({ message: "Request has no data to be updated" });
+
       if (body.password)
         return res
           .status(400)
