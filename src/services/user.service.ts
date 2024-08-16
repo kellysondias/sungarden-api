@@ -1,13 +1,8 @@
-import { AppDataSource } from "../data-source";
+import { AppDataSource } from "../database/data-source";
 import { validate } from "class-validator";
-import { User } from "./entity/User";
-import { ValidationResponse } from "./dto/user-response.dto";
-
-interface newData {
-  firstName: string;
-  lastName: string;
-  email: string;
-}
+import { User } from "../model/User";
+import { ValidationResponse } from "../controllers/dto/validation.dto";
+import { UserUpdateDTO } from "../controllers/dto/user-update.dto";
 
 class UsersService {
   private userRepository = AppDataSource.getRepository(User);
@@ -51,7 +46,7 @@ class UsersService {
     return await this.userRepository.findOneBy({ id });
   }
 
-  async update(id: number, newData: newData): Promise<User> {
+  async update(id: number, newData: UserUpdateDTO): Promise<User> {
     const user = await this.findById(id);
 
     if (!user) return null;
