@@ -58,29 +58,19 @@ export class UserController {
 
   async update({ body, params }: Request, res: Response, next: NextFunction) {
     try {
-      const id = params.id;
+      const id = parseInt(params.id);
 
-      const { firstName, lastName, email, password } = body;
-
-      if (password || email) {
+      if (body.password)
         return res
           .status(400)
-          .json({
-            message: `${
-              password ? "Password" : "E-mail"
-            } update is not allowed`,
-          });
-      }
+          .json({ message: "Password update is not allowed" });
 
-      const userData = { firstName, lastName };
+      const updatedUser = await UsersService.update(id, body);
 
-      //const updatedUser = await UsersService.(id, userData);
+      if (!updatedUser)
+        return res.status(404).json({ message: "User not found" });
 
-      // if (!updatedUser) {
-      //   return res.status(404).send("User not found");
-      // }
-
-      return res.status(200).send("User was updated successfully");
+      return res.status(200).json({ message: "User was updated successfully" });
     } catch (error) {
       next(error);
     }
