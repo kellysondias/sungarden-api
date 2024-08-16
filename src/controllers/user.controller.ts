@@ -81,4 +81,18 @@ export class UserController {
       next(error);
     }
   }
+
+  async delete({ params }: Request, res: Response, next: NextFunction) {
+    try {
+      const id = parseInt(params.id);
+
+      if (isNaN(id)) return res.status(400).send("Invalid ID");
+
+      await UsersService.delete(id);
+
+      return res.status(204).json({ message: "User was successfully deleted" });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
