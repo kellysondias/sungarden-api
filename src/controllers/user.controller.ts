@@ -90,7 +90,7 @@ export class UserController {
 
       await UsersService.delete(id);
 
-      return res.status(204).json({ message: "User was successfully deleted" });
+      return res.status(204).end();
     } catch (error) {
       next(error);
     }
