@@ -97,4 +97,20 @@ export class UserController {
       next(error);
     }
   }
+  async login(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { email, password } = req.body;
+      const user = await UsersService.login(email, password);
+
+      if (!user) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+
+      const token = await UsersService.generateToken(user);
+      req.headers.authorization = `Bearer ${token}`;
+      return res.status(200).json({ email: user.email, token });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

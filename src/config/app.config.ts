@@ -9,6 +9,8 @@ global.app_config = {
   PG_USER: "",
   PG_PASSWORD: "",
   PG_DATABASE: "",
+  JWT_SECRET: "",
+  JWT_EXPIRES: "",
 };
 
 Object.keys(global.app_config).forEach((key) => {

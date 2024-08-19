@@ -3,6 +3,7 @@ import { validate } from "class-validator";
 import { User } from "../model/User";
 import { ValidationResponse } from "../controllers/dto/validation.dto";
 import { UserUpdateDTO } from "../controllers/dto/user-update.dto";
+import { sign } from "jsonwebtoken";
 
 class UsersService {
   private userRepository = AppDataSource.getRepository(User);
@@ -64,6 +65,23 @@ class UsersService {
     const result = await this.userRepository.delete(user);
 
     return result.affected != null;
+  }
+
+  async login(email: string, password: string) {
+    const user = await this.userRepository.findOneBy({ email });
+
+    if (!user) return null;
+
+    if (user.password !== password) return null;
+
+    return user;
+  }
+
+  async generateToken(user: User) {
+    const token = sign({ id: user.id }, global.app_config.JWT_SECRET, {
+      expiresIn: global.app_config.JWT_EXPIRES,
+    });
+    return token;
   }
 }
 
