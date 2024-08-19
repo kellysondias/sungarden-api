@@ -55,6 +55,16 @@ class UsersService {
 
     return this.userRepository.save(updateUser);
   }
+
+  async delete(id: number) {
+    const user = await this.findById(id);
+
+    if (!user) return false;
+
+    const result = await this.userRepository.delete(user);
+
+    return result.affected != null;
+  }
 }
 
 export default new UsersService();
