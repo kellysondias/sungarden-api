@@ -88,7 +88,9 @@ export class UserController {
 
       if (isNaN(id)) return res.status(400).send("Invalid ID");
 
-      await UsersService.delete(id);
+      const result = await UsersService.delete(id);
+
+      if (!result) return res.status(404).send("User not found");
 
       return res.status(204).end();
     } catch (error) {

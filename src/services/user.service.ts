@@ -57,7 +57,13 @@ class UsersService {
   }
 
   async delete(id: number) {
-    return this.userRepository.delete(id);
+    const user = await this.findById(id);
+
+    if (!user) return false;
+
+    const result = await this.userRepository.delete(user);
+    
+    return result.affected != null && result.affected > 0;
   }
 }
 
