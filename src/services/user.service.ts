@@ -62,8 +62,8 @@ class UsersService {
     if (!user) return false;
 
     const result = await this.userRepository.delete(user);
-    
-    return result.affected != null && result.affected > 0;
+
+    return result.affected != null;
   }
 }
 
