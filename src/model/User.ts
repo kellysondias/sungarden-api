@@ -1,5 +1,6 @@
 import { IsEmail, IsString, Length, Matches } from "class-validator";
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn } from "typeorm";
+import { Culture } from "./Culture";
 
 @Entity("users")
 export class User {
@@ -27,4 +28,7 @@ export class User {
   })
   @Column()
   password: string;
+
+  @OneToMany(() => Culture, (user) => user.id)
+  cultures: Culture[];
 }
