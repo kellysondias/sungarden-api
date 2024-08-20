@@ -1,13 +1,15 @@
 import { IsEnum, IsString } from "class-validator";
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
+  Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { User } from "./User";
+import { Region } from "./Region";
+import { Climate } from "./Climate";
 
 export enum Type {
   FRUTA = "fruta",
@@ -19,18 +21,6 @@ export enum Quality {
   ALTA = "Alta",
   MEDIA = "Média",
   BAIXA = "Baixa",
-}
-
-export class mockRegion {
-  id: number;
-  name: string;
-  fkClimate: string;
-}
-
-export class mockClimate {
-  id: number;
-  name: string;
-  fkClimate: string;
 }
 
 @Entity("cultures")
@@ -59,13 +49,13 @@ export class Culture {
   @Column("enum", { enum: Type, nullable: false })
   type: Type;
 
-  @OneToOne(() => mockRegion, { nullable: false })
+  @OneToOne(() => Region, { nullable: false })
   @JoinColumn({ name: "fk_region", referencedColumnName: "name" })
-  fkRegion: mockRegion;
+  fkRegion: Region;
 
-  @OneToOne(() => mockClimate, { nullable: false })
+  @OneToOne(() => Climate, { nullable: false })
   @JoinColumn({ name: "fk_favorite_climate", referencedColumnName: "name" })
-  fkFavoriteClimate: mockClimate;
+  fkFavoriteClimate: Climate;
 
   @IsEnum(Quality)
   @Column("enum", { enum: Quality, nullable: false })

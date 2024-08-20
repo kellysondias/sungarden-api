@@ -2,16 +2,11 @@ import { IsString } from "class-validator";
 import {
   Column,
   Entity,
-  PrimaryGeneratedColumn,
-  OneToOne,
   JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
 } from "typeorm";
-
-class mockClimate {
-  id: number;
-  name: string;
-  fkRegion: string;
-}
+import { Climate } from "./Climate";
 
 enum Name {
   NORTE = "Norte",
@@ -30,7 +25,7 @@ export class Region {
   @Column("enum", { enum: Name, nullable: false })
   name: Name;
 
-  @OneToOne(() => mockClimate, { nullable: false })
+  @OneToOne(() => Climate, { nullable: false })
   @JoinColumn({ name: "fk_climate", referencedColumnName: "name" })
-  fkClimate: mockClimate;
+  fkClimate: Climate;
 }
