@@ -14,11 +14,11 @@ class mockClimate {
 }
 
 enum Name {
-  TROPICAL = "Tropical",
-  SEMIARIDO = "Semiárido",
-  TROPICAL_DE_SAVANA = "Tropical de Savana",
-  SUBTROPICAL = "Subtropical",
-  SUBTROPICAL_DE_MONTANHA = "Subtropical de Montanha",
+  NORTE = "Norte",
+  NORDESTE = "Nordeste",
+  CENTRO_OESTE = "Centro-Oeste",
+  SUDESTE = "Sudeste",
+  SUL = "Sul",
 }
 
 @Entity("regions")
