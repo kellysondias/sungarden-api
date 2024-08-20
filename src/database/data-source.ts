@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { User } from "../model/User";
+import { Culture } from "../model/Culture";
 
 export const AppDataSource = new DataSource({
   type: global.app_config.PG_TYPE as any,
@@ -11,7 +12,7 @@ export const AppDataSource = new DataSource({
   database: global.app_config.PG_DATABASE,
   synchronize: true,
   logging: false,
-  entities: [User],
+  entities: ["./src/model/*.ts"],
   migrations: [],
   subscribers: [],
 });
