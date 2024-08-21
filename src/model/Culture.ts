@@ -11,13 +11,13 @@ import { User } from "./User";
 import { Region } from "./Region";
 import { Climate } from "./Climate";
 
-export enum Type {
+enum Type {
   FRUTA = "fruta",
   LEGUME = "legume",
   VERDURA = "verdura",
 }
 
-export enum Quality {
+enum Quality {
   ALTA = "Alta",
   MEDIA = "Média",
   BAIXA = "Baixa",
