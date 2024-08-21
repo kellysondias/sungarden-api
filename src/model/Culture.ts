@@ -50,11 +50,11 @@ export class Culture {
   type: Type;
 
   @OneToOne(() => Region, { nullable: false })
-  @JoinColumn({ name: "fk_region", referencedColumnName: "name" })
+  @JoinColumn({ name: "fk_region" })
   fkRegion: Region;
 
   @OneToOne(() => Climate, { nullable: false })
-  @JoinColumn({ name: "fk_favorite_climate", referencedColumnName: "name" })
+  @JoinColumn({ name: "fk_favorite_climate" })
   fkFavoriteClimate: Climate;
 
   @IsEnum(Quality)

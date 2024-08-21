@@ -26,7 +26,7 @@ export class Climate {
   @Column("enum", { enum: Name, nullable: false, unique: true })
   name: Name;
 
-  @OneToMany(() => Region, (region) => region.name)
+  @OneToOne(() => Region)
   @JoinColumn({ name: "fk_region" })
   fkRegion: Region[];
 }
