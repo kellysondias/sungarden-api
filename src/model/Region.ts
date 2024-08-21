@@ -22,10 +22,10 @@ export class Region {
   id: number;
 
   @IsString()
-  @Column("enum", { enum: Name, nullable: false })
+  @Column("enum", { enum: Name, nullable: false, unique: true })
   name: Name;
 
-  @OneToOne(() => Climate, { nullable: false })
+  @OneToOne(() => Climate)
   @JoinColumn({ name: "fk_climate", referencedColumnName: "name" })
   fkClimate: Climate;
 }

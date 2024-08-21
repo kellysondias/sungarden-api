@@ -26,6 +26,6 @@ export class Climate {
   name: Name;
 
   @OneToOne(() => Region, { nullable: false })
-  @JoinColumn({ name: "fk_climate", referencedColumnName: "name" })
-  fkClimate: Region;
+  @JoinColumn({ name: "fk_region", referencedColumnName: "name" })
+  fkRegion: Region;
 }
