@@ -3,6 +3,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -22,10 +23,10 @@ export class Climate {
   id: number;
 
   @IsString()
-  @Column("enum", { enum: Name, nullable: false })
+  @Column("enum", { enum: Name, nullable: false, unique: true })
   name: Name;
 
-  @OneToOne(() => Region, { nullable: false })
-  @JoinColumn({ name: "fk_region", referencedColumnName: "name" })
-  fkRegion: Region;
+  @OneToMany(() => Region, (region) => region.name)
+  @JoinColumn({ name: "fk_region" })
+  fkRegion: Region[];
 }
