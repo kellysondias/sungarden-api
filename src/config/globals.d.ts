@@ -8,6 +8,8 @@ declare global {
         PG_USER: string;
         PG_PASSWORD: string;
         PG_DATABASE: string;
+        JWT_SECRET: string;
+        JWT_EXPIRES: string;
       };
     }
   }
